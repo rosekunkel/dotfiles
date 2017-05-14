@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Get the name and directory of the current script. This isn't particularly
+# robust to symlinks, but it should work well enough.
+script_name="$(basename "${BASH_SOURCE[0]}")"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cd "${script_dir}"
+
+# Find all of the files in the current directory which need to be symlinked,
+# making sure to exclued .git and this script.
+files="$(find \
+    -path "./.git" -prune -o \
+    -type f ! -path "./${script_name}" -printf '%P\n')"
+
+# Create a link to each file under this directory from the corresponding file
+# under the home directory.
+while read -r file; do
+    link="${HOME}/.${file}"
+
+    if mkdir -p "$(dirname "${link}")" && \
+       ln -s "${script_dir}/${file}" "${link}"; then
+	echo -en "\e[32m" # Green
+	echo "✔ ${link} → ${script_dir}/${file}"
+	echo -en "\e[39m" # Default
+    else
+	echo -en "\e[31m" # Red
+	echo "✘ ${link} → ${script_dir}/${file}"
+	echo -en "\e[39m" # Default
+    fi
+done <<< "${files}"
