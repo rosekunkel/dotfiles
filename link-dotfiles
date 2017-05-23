@@ -13,13 +13,24 @@ files="$(find \
     -path "./.git" -prune -o \
     -type f ! -path "./${script_name}" -printf '%P\n')"
 
+function create_link {
+    local target="$1"
+    local link="$2"
+
+    # Succeed if the correct link already exists or if the file does not exist.
+    if [[ -h "${link}" ]]; then
+        [[ "$(readlink "${link}")" == "${target}" ]]
+    else
+        mkdir -p "$(dirname "${link}")" && ln -s "${target}" "${link}"
+    fi
+}
+
 # Create a link to each file under this directory from the corresponding file
 # under the home directory.
 while read -r file; do
     link="${HOME}/.${file}"
 
-    if mkdir -p "$(dirname "${link}")" && \
-       ln -s "${script_dir}/${file}" "${link}"; then
+    if create_link "${script_dir}/${file}" "${link}"; then
 	echo -en "\e[32m" # Green
 	echo "✔ ${link} → ${script_dir}/${file}"
 	echo -en "\e[39m" # Default
