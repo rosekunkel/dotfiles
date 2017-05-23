@@ -10,7 +10,14 @@
   (when (or (file-newer-than-file-p startup-org startup-elc)
             (file-newer-than-file-p user-init-file startup-elc))
     (require 'ob-tangle)
-    (org-babel-tangle-file startup-org startup-el "emacs-lisp")
+
+    ;; Since our startup file is actually a symbolic link in the .emacs.d
+    ;; directory, we need to suppress a confirmation message when visiting the
+    ;; file to tangle it.
+    (let ((vc-follow-symlinks t))
+      (org-babel-tangle-file startup-org startup-el "emacs-lisp"))
+
     (byte-compile-file startup-el)
+    (message "Byte-compiled")
     (delete-file startup-el))
   (load-file startup-elc))
