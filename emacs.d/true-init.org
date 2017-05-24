@@ -55,3 +55,7 @@ Disable some pieces of the native UI.
     :config
     (tool-bar-mode -1))
 #+END_SRC
+* Splash screen
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t)
+#+END_SRC
