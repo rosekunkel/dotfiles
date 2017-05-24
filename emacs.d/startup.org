@@ -34,3 +34,22 @@ Install use-package if needed and require it.
       (package-install 'use-package))
     (require 'use-package))
 #+END_SRC
+* Theme
+Set Solarized as the default theme.
+#+BEGIN_SRC emacs-lisp
+  (use-package solarized-theme
+    :ensure t
+    :config
+    (load-theme 'solarized-light 'no-confirm))
+#+END_SRC
+* Native UI
+Disable some pieces of the native UI.
+#+BEGIN_SRC emacs-lisp
+  (use-package scroll-bar
+    :config
+    (scroll-bar-mode -1))
+
+  (use-package tool-bar
+    :config
+    (tool-bar-mode -1))
+#+END_SRC
