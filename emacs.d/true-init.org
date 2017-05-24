@@ -69,10 +69,23 @@ Automatically lay windows out using golden-ratio.
     (golden-ratio-mode))
 #+END_SRC
 * Smartparens
-Enable strict mode for Smartparens everywhere.
+Enable strict mode for Smartparens everywhere, and set up Paredit-like
+keybindings.
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens-config
     :ensure smartparens
+    :bind (:map smartparens-mode-map
+                ("M-s" . sp-splice-sexp)
+                ("M-<up>" . sp-splice-sexp-killing-backward)
+                ("M-<down>" . sp-splice-sexp-killing-forward)
+                ("M-r" . sp-raise-sexp)
+                ("C-<right>" . sp-forward-slurp-sexp)
+                ("C-<left>" . sp-forward-barf-sexp)
+                ("C-M-<left>" . sp-backward-slurp-sexp)
+                ("C-M-<right>" . sp-backward-barf-sexp)
+                ("M-S" . sp-split-sexp)
+                ("M-J" . sp-join-sexp)
+                ("M-R" . sp-rewrap-sexp))
     :config
     (smartparens-global-strict-mode))
 #+END_SRC
