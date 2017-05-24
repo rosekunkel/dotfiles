@@ -1,4 +1,5 @@
-* Initialize package.el
+* Bootstrapping
+** Initialize package.el
 We need to initialize package.el before use-package, and we also need it at
 compile time to bootstrap use-package.
 #+BEGIN_SRC emacs-lisp
@@ -7,15 +8,15 @@ compile time to bootstrap use-package.
     (package-initialize)
     (setq package-enable-at-startup nil))
 #+END_SRC
-* Put customizations in their own file
+** Put customizations in their own file
 Installing packages modifies custom variables, so we need to move the custom
 file very early in initialization.
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
     (setq custom-file (locate-user-emacs-file "custom.el"))
-    (load custom-file 'noerror))
+    (load custom-file 'no-error))
 #+END_SRC
-* Add package archives
+** Add package archives
 We need MELPA to install use-package, so we set these up at compile time.
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
@@ -24,7 +25,7 @@ We need MELPA to install use-package, so we set these up at compile time.
             ("melpa" . "https://melpa.org/packages/")
             ("marmalade" . "https://marmalade-repo.org/packages/"))))
 #+END_SRC
-* Bootstrap use-package
+** Bootstrap use-package
 Install use-package if needed and require it.
 #+BEGIN_SRC emacs-lisp
   (eval-when-compile
