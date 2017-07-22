@@ -34,6 +34,13 @@ Install use-package if needed and require it.
       (package-install 'use-package))
     (require 'use-package))
 #+END_SRC
+** Load use-package dependencies at runtime
+Normally, loading use-package would load these, but since we only load
+use-package at compile time, we need to load them ourselves.
+#+BEGIN_SRC emacs-lisp
+  (require 'diminish)
+  (require 'bind-key)
+#+END_SRC
 * Theme
 Set Solarized as the default theme.
 #+BEGIN_SRC emacs-lisp
