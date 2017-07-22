@@ -96,3 +96,11 @@ keybindings.
     :config
     (smartparens-global-strict-mode))
 #+END_SRC
+* Rust
+Set up rust-mode and have it automatically format files using rustfmt.
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode
+    :ensure t
+    :config
+    (setq rust-format-on-save t))
+#+END_SRC
