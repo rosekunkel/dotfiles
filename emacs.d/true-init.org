@@ -81,6 +81,7 @@ keybindings.
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens-config
     :ensure smartparens
+    :demand
     :bind (:map smartparens-mode-map
                 ("M-s" . sp-splice-sexp)
                 ("M-<up>" . sp-splice-sexp-killing-backward)
