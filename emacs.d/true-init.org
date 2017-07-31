@@ -149,3 +149,9 @@ Set up Magit.
     :ensure t
     :defer t)
 #+END_SRC
+* Backups
+I've never once used an Emacs backup file, and I make regular
+full-system backups, so I think we can turn them off.
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files nil)
+#+END_SRC
