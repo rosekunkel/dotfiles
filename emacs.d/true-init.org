@@ -129,3 +129,15 @@ Load rust-specific pieces of lsp-mode and load it alongside rust-mode.
                 (require 'lsp-rust)
                 (lsp-mode))))
 #+END_SRC
+* SLIME
+Set up the Superior Lisp Interaction Mode for Emacs, using SBCL and
+Quicklisp.
+#+BEGIN_SRC emacs-lisp
+  (use-package slime
+    :ensure t
+    :defer t
+    :config
+    (load (expand-file-name "~/.local/lib/quicklisp/slime-helper.el"))
+    (setq inferior-lisp-program "sbcl")
+    (setq slime-contribs '(slime-fancy)))
+#+END_SRC
