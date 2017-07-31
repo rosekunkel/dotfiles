@@ -142,3 +142,10 @@ Quicklisp.
     (setq inferior-lisp-program "sbcl")
     (setq slime-contribs '(slime-fancy)))
 #+END_SRC
+* Version control
+Set up Magit.
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :defer t)
+#+END_SRC
