@@ -155,3 +155,10 @@ full-system backups, so I think we can turn them off.
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files nil)
 #+END_SRC
+* Overwrite selection
+Cause the selection to be overwritten by editing commands.
+#+BEGIN_SRC emacs-lisp
+  (use-package delsel
+    :config
+    (delete-selection-mode))
+#+END_SRC
