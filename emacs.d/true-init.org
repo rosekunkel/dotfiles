@@ -162,3 +162,11 @@ Cause the selection to be overwritten by editing commands.
     :config
     (delete-selection-mode))
 #+END_SRC
+* Coq
+Proof General isn't set up as a package, so we have to have it
+installed locally. We use it to load .v files as Coq.
+#+BEGIN_SRC emacs-lisp
+  (use-package proof-site
+    :load-path "lisp/PG/generic/"
+    :mode ("\\.v\\'" . coq-mode))
+#+END_SRC
