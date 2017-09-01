@@ -170,3 +170,12 @@ installed locally. We use it to load .v files as Coq.
     :load-path "lisp/PG/generic/"
     :mode ("\\.v\\'" . coq-mode))
 #+END_SRC
+* Haskell
+Set up haskell-mode with REPL support.
+#+BEGIN_SRC emacs-lisp
+  (use-package haskell-mode
+    :ensure t
+    :defer t
+    :config
+    (add-hook 'haskell-mode-hook #'interactive-haskell-mode))
+#+END_SRC
