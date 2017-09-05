@@ -1,7 +1,7 @@
 * Bootstrapping
 ** Initialize package.el
-We need to initialize package.el before use-package, and we also need it at
-compile time to bootstrap use-package.
+We need to initialize package.el before req-package, and we also need it at
+compile time to bootstrap req-package.
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
     (require 'package)
@@ -17,7 +17,7 @@ file very early in initialization.
     (load custom-file 'no-error))
 #+END_SRC
 ** Add package archives
-We need MELPA to install use-package, so we set these up at compile time.
+We need MELPA to install req-package, so we set these up at compile time.
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
     (setq package-archives
@@ -25,39 +25,34 @@ We need MELPA to install use-package, so we set these up at compile time.
             ("melpa" . "https://melpa.org/packages/")
             ("marmalade" . "https://marmalade-repo.org/packages/"))))
 #+END_SRC
-** Bootstrap use-package
-Install use-package if needed and require it.
+** Bootstrap req-package
+Install req-package if needed and require it.
 #+BEGIN_SRC emacs-lisp
-  (eval-when-compile
-    (unless (package-installed-p 'use-package)
+  (eval-and-compile
+    (unless (package-installed-p 'req-package)
       (package-refresh-contents)
-      (package-install 'use-package))
-    (require 'use-package))
-#+END_SRC
-** Load use-package dependencies at runtime
-Normally, loading use-package would load these, but since we only load
-use-package at compile time, we need to load them ourselves.
-#+BEGIN_SRC emacs-lisp
-  (require 'diminish)
-  (require 'bind-key)
+      (package-install 'req-package))
+    (require 'req-package))
 #+END_SRC
 * Theme
 Set Solarized as the default theme.
 #+BEGIN_SRC emacs-lisp
-  (use-package solarized-theme
-    :ensure t
+  (req-package solarized-theme
+    :loader :elpa
     :config
     (load-theme 'solarized-light 'no-confirm))
 #+END_SRC
 * Native UI
 Disable some pieces of the native UI.
 #+BEGIN_SRC emacs-lisp
-  (use-package scroll-bar
+  (req-package scroll-bar
+    :loader :built-in
     :defer t
     :config
     (scroll-bar-mode -1))
 
-  (use-package tool-bar
+  (req-package tool-bar
+    :loader :built-in
     :defer t
     :config
     (tool-bar-mode -1))
@@ -69,8 +64,8 @@ Disable some pieces of the native UI.
 * Window layout
 Automatically lay windows out using golden-ratio.
 #+BEGIN_SRC emacs-lisp
-  (use-package golden-ratio
-    :ensure t
+  (req-package golden-ratio
+    :loader :elpa
     :diminish golden-ratio-mode
     :config
     (golden-ratio-mode))
@@ -79,7 +74,8 @@ Automatically lay windows out using golden-ratio.
 Enable strict mode for Smartparens everywhere, and set up Paredit-like
 keybindings.
 #+BEGIN_SRC emacs-lisp
-  (use-package smartparens-config
+  (req-package smartparens-config
+    :force
     :ensure smartparens
     :demand
     :bind (:map smartparens-mode-map
@@ -101,16 +97,16 @@ keybindings.
 Add a mode for integrating with language servers to provide
 completion, go-to-definition, etc.
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :defer t
-    :ensure t)
+  (req-package lsp-mode
+    :loader :elpa
+    :defer t)
 #+END_SRC
 * Rust
 ** Major mode
 Set up rust-mode and have it automatically format files using rustfmt.
 #+BEGIN_SRC emacs-lisp
-  (use-package rust-mode
-    :ensure t
+  (req-package rust-mode
+    :loader :elpa
     :defer t
     :config
     (setq rust-format-on-save t))
@@ -118,8 +114,9 @@ Set up rust-mode and have it automatically format files using rustfmt.
 ** Rust language server integration
 Load rust-specific pieces of lsp-mode and load it alongside rust-mode.
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-rust
-    :ensure t
+  (req-package lsp-rust
+    :require lsp-mode rust-mode
+    :loader :elpa
     :defer t
     :init
     (add-hook 'rust-mode-hook
@@ -134,8 +131,8 @@ Load rust-specific pieces of lsp-mode and load it alongside rust-mode.
 Set up the Superior Lisp Interaction Mode for Emacs, using SBCL and
 Quicklisp.
 #+BEGIN_SRC emacs-lisp
-  (use-package slime
-    :ensure t
+  (req-package slime
+    :loader :elpa
     :defer t
     :config
     (load (expand-file-name "~/.local/lib/quicklisp/slime-helper.el"))
@@ -145,8 +142,8 @@ Quicklisp.
 * Version control
 Set up Magit.
 #+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
+  (req-package magit
+    :loader :elpa
     :defer t)
 #+END_SRC
 * Backups
@@ -158,7 +155,8 @@ full-system backups, so I think we can turn them off.
 * Overwrite selection
 Cause the selection to be overwritten by editing commands.
 #+BEGIN_SRC emacs-lisp
-  (use-package delsel
+  (req-package delsel
+    :loader :built-in
     :config
     (delete-selection-mode))
 #+END_SRC
@@ -166,16 +164,22 @@ Cause the selection to be overwritten by editing commands.
 Proof General isn't set up as a package, so we have to have it
 installed locally. We use it to load .v files as Coq.
 #+BEGIN_SRC emacs-lisp
-  (use-package proof-site
+  (req-package proof-site
+    :loader :path
     :load-path "lisp/PG/generic/"
     :mode ("\\.v\\'" . coq-mode))
 #+END_SRC
 * Haskell
 Set up haskell-mode with REPL support.
 #+BEGIN_SRC emacs-lisp
-  (use-package haskell-mode
-    :ensure t
+  (req-package haskell-mode
+    :loader :elpa
     :defer t
     :config
     (add-hook 'haskell-mode-hook #'interactive-haskell-mode))
+#+END_SRC
+* Finalization
+Execute our req-package statements according to the dependency graph.
+#+BEGIN_SRC emacs-lisp
+  (req-package-finish)
 #+END_SRC
