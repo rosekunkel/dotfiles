@@ -178,6 +178,17 @@ Set up haskell-mode with REPL support.
     :config
     (add-hook 'haskell-mode-hook #'interactive-haskell-mode))
 #+END_SRC
+* Typopunct-mode
+Allow for easy entry of typographical characters.
+#+BEGIN_SRC emacs-lisp
+  (req-package typopunct
+    :loader :elpa
+    :commands (typopunct-mode)
+    :init
+    (add-hook 'text-mode-hook #'typopunct-mode)
+    :config
+    (typopunct-change-language 'english t))
+#+END_SRC
 * Finalization
 Execute our req-package statements according to the dependency graph.
 #+BEGIN_SRC emacs-lisp
