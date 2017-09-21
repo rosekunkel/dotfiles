@@ -189,6 +189,12 @@ Allow for easy entry of typographical characters.
     :config
     (typopunct-change-language 'english t))
 #+END_SRC
+* LaTeX input method
+#+BEGIN_SRC emacs-lisp
+  (req-package latex-input
+    :loader :path
+    :load-path "lisp/")
+#+END_SRC
 * Finalization
 Execute our req-package statements according to the dependency graph.
 #+BEGIN_SRC emacs-lisp
