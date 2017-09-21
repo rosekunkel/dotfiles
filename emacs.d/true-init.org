@@ -193,6 +193,7 @@ Allow for easy entry of typographical characters.
   (use-package typopunct
     :ensure t
     :commands (typopunct-mode)
+    :functions typopunct-change-language
     :init
     (add-hook 'text-mode-hook #'typopunct-mode)
     :config
