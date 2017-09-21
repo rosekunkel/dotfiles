@@ -168,7 +168,15 @@ installed locally. We use it to load .v files as Coq.
 #+BEGIN_SRC emacs-lisp
   (use-package proof-site
     :load-path "lisp/PG/generic/"
-    :mode ("\\.v\\'" . coq-mode))
+    :mode ("\\.v\\'" . coq-mode)
+    :defines proof-splash-enable
+    :config
+    ;; Hide the splash screen.
+    (setq proof-splash-enable nil)
+
+    ;; When the goals or repsonse buffer update, the window layout
+    ;; breaks, so we need to resize manually.
+    (add-hook 'proof-shell-handle-delayed-output-hook #'golden-ratio))
 #+END_SRC
 * Haskell
 Set up haskell-mode with REPL support.
