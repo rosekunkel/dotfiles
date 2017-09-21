@@ -195,6 +195,11 @@ Allow for easy entry of typographical characters.
     :loader :path
     :load-path "lisp/")
 #+END_SRC
+* AucTeX
+#+BEGIN_SRC emacs-lisp
+  (use-package tex
+    :ensure auctex)
+#+END_SRC
 * Finalization
 Execute our req-package statements according to the dependency graph.
 #+BEGIN_SRC emacs-lisp
