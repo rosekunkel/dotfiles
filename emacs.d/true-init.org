@@ -215,3 +215,11 @@ Allow for easy entry of typographical characters.
     :ensure t
     :defer t)
 #+END_SRC
+* Helm
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-config
+    :ensure helm
+    :bind (("M-x" . helm-M-x)
+           ("C-x C-f" . helm-find-files)
+           ("C-x C-b" . helm-buffers-list)))
+#+END_SRC
