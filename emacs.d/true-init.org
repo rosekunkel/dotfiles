@@ -63,6 +63,7 @@ Disable some pieces of the native UI.
     (tool-bar-mode -1))
 #+END_SRC
 * Splash screen
+Turn off the startup screen.
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
 #+END_SRC
@@ -200,22 +201,26 @@ Allow for easy entry of typographical characters.
     (typopunct-change-language 'english t))
 #+END_SRC
 * LaTeX input method
+Add a LaTeX-style input method for special characters.
 #+BEGIN_SRC emacs-lisp
   (use-package latex-input
     :load-path "lisp/")
 #+END_SRC
 * AucTeX
+Use AucTeX instead of the built-in TeX mode.
 #+BEGIN_SRC emacs-lisp
   (use-package tex
     :ensure auctex)
 #+END_SRC
 * Racket
+Set up racket-mode for editing Racket files.
 #+BEGIN_SRC emacs-lisp
   (use-package racket-mode
     :ensure t
     :defer t)
 #+END_SRC
 * Helm
+Use helm versions of common commands.
 #+BEGIN_SRC emacs-lisp
   (use-package helm-config
     :ensure helm
