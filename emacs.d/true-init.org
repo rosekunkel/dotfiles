@@ -19,11 +19,10 @@ file very early in initialization.
 ** Add package archives
 We need MELPA to install use-package, so we set these up at compile time.
 #+BEGIN_SRC emacs-lisp
-  (eval-and-compile
-    (setq package-archives
-          '(("gnu" . "https://elpa.gnu.org/packages/")
-            ("melpa" . "https://melpa.org/packages/")
-            ("marmalade" . "https://marmalade-repo.org/packages/"))))
+    (eval-and-compile
+      (setq package-archives
+	    '(("gnu" . "https://elpa.gnu.org/packages/")
+	      ("melpa" . "https://melpa.org/packages/"))))
 #+END_SRC
 ** Bootstrap use-package
 Install use-package if needed and require it.
@@ -38,7 +37,9 @@ Install use-package if needed and require it.
 Normally, loading use-package would load these, but since we only load
 use-package at compile time, we need to load them ourselves.
 #+BEGIN_SRC emacs-lisp
-  (require 'diminish)
+  (use-package diminish
+    :ensure t)
+
   (require 'bind-key)
 #+END_SRC
 * Theme

@@ -17,7 +17,12 @@
     (let ((vc-follow-symlinks t))
       (org-babel-tangle-file true-init-org true-init-el "emacs-lisp"))
 
-    (byte-compile-file true-init-el)
+    ;; Byte-compiling will load all the packages, so to avoid polluting our
+    ;; environment we run another instance of Emacs.
+    (call-process "emacs" nil nil nil
+		  "-Q" "--batch" "-f" "batch-byte-compile"
+		  true-init-el)
+
     (message "Byte-compiled")
     (delete-file true-init-el))
   (load-file true-init-elc))
