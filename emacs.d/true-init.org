@@ -192,20 +192,20 @@ Set up haskell-mode with REPL support.
 * Typopunct-mode
 Allow for easy entry of typographical characters.
 #+BEGIN_SRC emacs-lisp
-  (use-package typopunct
-    :ensure t
-    :commands (typopunct-mode)
-    :functions typopunct-change-language
-    :init
-    (add-hook 'text-mode-hook #'typopunct-mode)
-    :config
-    (typopunct-change-language 'english t))
+  ;; (use-package typopunct
+  ;;   :ensure t
+  ;;   :commands (typopunct-mode)
+  ;;   :functions typopunct-change-language
+  ;;   :init
+  ;;   (add-hook 'text-mode-hook #'typopunct-mode)
+  ;;   :config
+  ;;   (typopunct-change-language 'english t))
 #+END_SRC
 * LaTeX input method
 Add a LaTeX-style input method for special characters.
 #+BEGIN_SRC emacs-lisp
-  (use-package latex-input
-    :load-path "lisp/")
+  ;; (use-package latex-input
+  ;;   :load-path "lisp/")
 #+END_SRC
 * AucTeX
 Use AucTeX instead of the built-in TeX mode.
@@ -228,4 +228,16 @@ Use helm versions of common commands.
     :bind (("M-x" . helm-M-x)
            ("C-x C-f" . helm-find-files)
            ("C-x C-b" . helm-buffers-list)))
+#+END_SRC
+* Ott
+Add ott-mode, assuming that Ott was installed with OPAM.
+#+BEGIN_SRC emacs-lisp
+  (eval-and-compile
+    (let ((opam-share
+	   (substring (shell-command-to-string "opam config var share") 0 -1)))
+      (setq opam-load-path (list (concat opam-share "/emacs/site-lisp")))))
+
+  (use-package ott-mode
+    :load-path opam-load-path
+    :mode "\\.ott\\'")
 #+END_SRC
